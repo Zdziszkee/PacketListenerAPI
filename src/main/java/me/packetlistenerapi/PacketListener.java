@@ -13,7 +13,7 @@ import java.util.List;
 
 import static me.packetlistenerapi.PacketListenerManager.getChannelPipeLine;
 
-public abstract class PacketListener<T> {
+public  final   class PacketListener<T> {
     private final PacketHandler<T> packetHandler;
     private final T t;
     private boolean isCanceled;
@@ -22,7 +22,7 @@ public abstract class PacketListener<T> {
         this.packetHandler = packetHandler;
         this.t = (T) findSuperClassParameterType(this);
     }
-    private Class<?> findSuperClassParameterType(Object instance) {
+    private final Class<?> findSuperClassParameterType(Object instance) {
         Class<?> subClass = instance.getClass();
         while (subClass != subClass.getSuperclass()) {
             subClass = subClass.getSuperclass();
@@ -32,7 +32,7 @@ public abstract class PacketListener<T> {
         return (Class<?>) parameterizedType.getActualTypeArguments()[0];
     }
 
-    protected void inject(final Player player) {
+    protected final void inject(final Player player) {
         final ChannelPipeline channelPipeline = getChannelPipeLine(player);
         if (channelPipeline.get("InGoingPacketInjector") != null) {
             return;
@@ -60,15 +60,15 @@ public abstract class PacketListener<T> {
         });
     }
 
-    public boolean isCanceled() {
+    public final boolean isCanceled() {
         return isCanceled;
     }
 
-    public void setCanceled(boolean canceled) {
+    public final void setCanceled(boolean canceled) {
         isCanceled = canceled;
     }
 
-    protected PacketHandler<T> getPacketHandler() {
+    protected final PacketHandler<T> getPacketHandler() {
         return packetHandler;
     }
 }
