@@ -6,7 +6,6 @@ import io.netty.channel.ChannelOutboundHandlerAdapter;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.ChannelPromise;
 import io.netty.handler.codec.MessageToMessageDecoder;
-import net.minecraft.server.v1_8_R3.Packet;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.ParameterizedType;
@@ -21,16 +20,16 @@ public abstract class PacketListener<T> {
     public PacketListener(PacketHandler<T> packetHandler) {
         this.isCanceled = false;
         this.packetHandler = packetHandler;
-        this.t = (T) findSuperClassParameterType(this,0);
+        this.t = (T) findSuperClassParameterType(this);
     }
-    private Class<?> findSuperClassParameterType(Object instance, int parameterIndex) {
+    private Class<?> findSuperClassParameterType(Object instance) {
         Class<?> subClass = instance.getClass();
         while (subClass != subClass.getSuperclass()) {
             subClass = subClass.getSuperclass();
             if (subClass == null) throw new IllegalArgumentException();
         }
         ParameterizedType parameterizedType = (ParameterizedType) subClass.getGenericSuperclass();
-        return (Class<?>) parameterizedType.getActualTypeArguments()[parameterIndex];
+        return (Class<?>) parameterizedType.getActualTypeArguments()[0];
     }
 
     protected void inject(final Player player) {
