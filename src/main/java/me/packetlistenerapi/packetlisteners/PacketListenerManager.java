@@ -2,7 +2,6 @@ package me.packetlistenerapi.packetlisteners;
 
 
 import io.netty.channel.ChannelPipeline;
-import me.packetlistenerapi.packetlisteners.PacketListener;
 import net.minecraft.server.v1_8_R3.Packet;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;

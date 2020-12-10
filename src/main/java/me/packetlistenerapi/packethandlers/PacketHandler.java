@@ -1,5 +1,5 @@
 package me.packetlistenerapi.packethandlers;
 
 
-public interface PacketHandler{
+public interface PacketHandler <T>{
 }
