@@ -20,7 +20,7 @@ public final class PacketListener<T extends Packet<?>> {
     private final PacketHandler<T> packetHandler;
     private boolean isCanceled;
 
-    protected PacketListener(PacketHandler<T> packetHandler) {
+    public PacketListener(PacketHandler<T> packetHandler) {
         this.isCanceled = false;
         this.packetHandler = packetHandler;
     }
