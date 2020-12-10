@@ -1,8 +1,8 @@
-package me.zdziszkee.packetlistenerapi.packetlisteners;
+package me.zdziszkee.packetlistenerapi;
 
 
 import io.netty.channel.ChannelPipeline;
-import net.minecraft.server.v1_8_R3.Packet;
+import me.zdziszkee.packetlistenerapi.PacketListener;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -17,19 +17,22 @@ import java.util.List;
 public class PacketListenerManager implements Listener {
 
 
-    private static final List<PacketListener<? extends Packet<?>>> packetListeners = new ArrayList<>();
+    private static final List<PacketListener> packetListeners = new ArrayList<>();
 
     protected static ChannelPipeline getChannelPipeLine(final Player player) {
         return (((CraftPlayer) player).getHandle().playerConnection.networkManager.channel.pipeline());
     }
 
+    protected PacketListenerManager() {
+    }
+
     private void inject(final Player player) {
-        for (PacketListener<? extends Packet<?>> packetListener : packetListeners) {
+        for (PacketListener packetListener : packetListeners) {
             packetListener.inject(player);
         }
     }
 
-    public void addPacketListener(final PacketListener<? extends Packet<?>> packetListener) {
+    public void addPacketListener(final PacketListener packetListener) {
         packetListeners.add(packetListener);
         injectAllOnlinePlayers();
     }

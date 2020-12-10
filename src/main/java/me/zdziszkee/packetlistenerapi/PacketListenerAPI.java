@@ -1,9 +1,6 @@
 package me.zdziszkee.packetlistenerapi;
 
 
-import me.zdziszkee.packetlistenerapi.packetlisteners.PacketListener;
-import me.zdziszkee.packetlistenerapi.packetlisteners.PacketListenerManager;
-import net.minecraft.server.v1_8_R3.Packet;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -16,7 +13,7 @@ public class PacketListenerAPI {
         registerEvents();
     }
 
-    public void addPacketListener(final PacketListener<? extends Packet<?>> packetListener) {
+    public void addPacketListener(final PacketListener packetListener) {
         packetListenerManager.addPacketListener(packetListener);
     }
 
