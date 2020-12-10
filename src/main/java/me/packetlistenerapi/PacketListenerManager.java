@@ -37,7 +37,7 @@ public class PacketListenerManager implements Listener {
     @EventHandler
     private void onPlayerQuit(final PlayerQuitEvent e){
         final Player player = e.getPlayer();
-        unInject(player);
+        eject(player);
     }
 
     private void injectAllOnlinePlayers(){
@@ -46,10 +46,12 @@ public class PacketListenerManager implements Listener {
         }
     }
 
-    private void unInject(final Player player){
+    private void eject(final Player player){
         ChannelPipeline channelPipeline = getChannelPipeLine(player);
-        if(channelPipeline.get("PacketInjector")!=null)
-            channelPipeline.remove("PacketInjector");
+        if(channelPipeline.get("InGoingPacketInjector")!=null)
+            channelPipeline.remove("InGoingPacketInjector");
+        if(channelPipeline.get("OutGoingPacketInjector")!=null)
+            channelPipeline.remove("OutGoingPacketInjector");
     }
      protected static ChannelPipeline getChannelPipeLine(final Player player){
      return  (((CraftPlayer) player).getHandle().playerConnection.networkManager.channel.pipeline());

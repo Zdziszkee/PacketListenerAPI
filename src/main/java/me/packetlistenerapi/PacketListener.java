@@ -14,8 +14,10 @@ import static me.packetlistenerapi.PacketListenerManager.getChannelPipeLine;
 public abstract class PacketListener<T extends Packet<?>> {
 private final T t;
 private final PacketHandler<T> packetHandler;
+private  boolean isCanceled;
    public PacketListener(T t, PacketHandler<T> packetHandler) {
       this.t = t;
+      this.isCanceled = false;
       this.packetHandler = packetHandler;
    }
 
@@ -30,6 +32,7 @@ private final PacketHandler<T> packetHandler;
     channelPipeline.addAfter("inGoingDecoder", "InGoingPacketInjector", new MessageToMessageDecoder<T>() {
        @Override
        protected void decode(final ChannelHandlerContext channelHandlerContext,final T packet,final List<Object> list) {
+          if(isCanceled)return;
           list.add(packet);
           getPacketHandler().onPacketPlayIn(player,packet);
        }
@@ -40,12 +43,23 @@ private final PacketHandler<T> packetHandler;
     channelPipeline.addBefore("outGoingDecoder", "OutGoingPacketInjector", new ChannelOutboundHandlerAdapter(){
        @Override
        public void write(final ChannelHandlerContext channelHandlerContext,final Object o,final ChannelPromise channelPromise) throws Exception {
-          if(o.getClass() !=t.getClass())return;
-          getPacketHandler().onPacketPlayOut(player,t,channelHandlerContext);
+          if(!isCanceled) {
+             if (o.getClass() != t.getClass()) return;
+             getPacketHandler().onPacketPlayOut(player, t, channelHandlerContext);
+          }
           super.write(channelHandlerContext, o, channelPromise);
        }
     });
  }
+
+   public void setCanceled(boolean canceled) {
+      isCanceled = canceled;
+   }
+
+   public boolean isCanceled() {
+      return isCanceled;
+   }
+
    protected PacketHandler<T> getPacketHandler() {
       return packetHandler;
    }
