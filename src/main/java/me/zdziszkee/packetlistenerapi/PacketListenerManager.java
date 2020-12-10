@@ -2,7 +2,6 @@ package me.zdziszkee.packetlistenerapi;
 
 
 import io.netty.channel.ChannelPipeline;
-import me.zdziszkee.packetlistenerapi.PacketListener;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -57,10 +56,13 @@ public class PacketListenerManager implements Listener {
 
     private void eject(final Player player) {
         ChannelPipeline channelPipeline = getChannelPipeLine(player);
-        if (channelPipeline.get("InGoingPacketInjector") != null)
-            channelPipeline.remove("InGoingPacketInjector");
-        if (channelPipeline.get("OutGoingPacketInjector") != null)
-            channelPipeline.remove("OutGoingPacketInjector");
-    }
+        for(PacketListener packetListener:packetListeners) {
+            if(channelPipeline.get(packetListener.getHandlerName())!=null)
+            channelPipeline.remove(packetListener.getHandlerName());
+        }
 
+    }
+    protected static int getListenerCount(){
+        return packetListeners.size();
+    }
 }

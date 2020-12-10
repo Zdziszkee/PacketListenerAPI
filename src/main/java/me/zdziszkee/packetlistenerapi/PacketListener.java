@@ -11,17 +11,17 @@ import static me.zdziszkee.packetlistenerapi.PacketListenerManager.getChannelPip
 
 
 public final class PacketListener {
-    private boolean isCanceled;
     private final ChannelHandler channelHandler;
+    private final String handlerName;
 
     public PacketListener(MessageToMessageDecoder<? extends Packet<?>> packetHandler) {
         this.channelHandler = packetHandler;
-        this.isCanceled = false;
+        this.handlerName = "ingoing_handler" + PacketListenerManager.getListenerCount();
     }
 
     public PacketListener(ChannelOutboundHandlerAdapter channelOutboundHandlerAdapter) {
-        this.isCanceled = false;
         this.channelHandler = channelOutboundHandlerAdapter;
+        this.handlerName = "outgoing_handler" + PacketListenerManager.getListenerCount();
     }
 
     final void inject(final Player player) {
@@ -30,21 +30,16 @@ public final class PacketListener {
             return;
         }
         if (channelHandler instanceof MessageToMessageDecoder) {
-            channelPipeline.addAfter("decoder", "InGoingPacketInjector", channelHandler);
+            channelPipeline.addAfter("decoder", handlerName, channelHandler);
         } else if (channelHandler instanceof ChannelOutboundHandlerAdapter) {
             if (channelPipeline.get("OutGoingPacketInjector") != null) {
                 return;
             }
-            channelPipeline.addBefore("packet_handler", "OutGoingPacketInjector", channelHandler);
+            channelPipeline.addBefore("packet_handler", handlerName, channelHandler);
         }
     }
 
-    public final boolean isCanceled() {
-        return isCanceled;
+    public String getHandlerName() {
+        return handlerName;
     }
-
-    public final void setCanceled(boolean canceled) {
-        isCanceled = canceled;
-    }
-
 }
