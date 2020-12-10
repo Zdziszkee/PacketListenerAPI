@@ -22,7 +22,7 @@ public  final   class PacketListener<T> {
         this.packetHandler = packetHandler;
         this.t = (T) findSuperClassParameterType(this);
     }
-    private final Class<?> findSuperClassParameterType(Object instance) {
+    private Class<?> findSuperClassParameterType(Object instance) {
         Class<?> subClass = instance.getClass();
         while (subClass != subClass.getSuperclass()) {
             subClass = subClass.getSuperclass();
