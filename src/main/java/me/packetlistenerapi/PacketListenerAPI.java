@@ -1,6 +1,8 @@
 package me.packetlistenerapi;
 
 
+import me.packetlistenerapi.packetlisteners.PacketListener;
+import me.packetlistenerapi.packetlisteners.PacketListenerManager;
 import net.minecraft.server.v1_8_R3.Packet;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
