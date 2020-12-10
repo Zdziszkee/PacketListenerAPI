@@ -1,4 +1,4 @@
-package me.packetlistenerapi.packethandlers;
+package me.zdziszkee.packetlistenerapi.packethandlers;
 
 import org.bukkit.entity.Player;
 

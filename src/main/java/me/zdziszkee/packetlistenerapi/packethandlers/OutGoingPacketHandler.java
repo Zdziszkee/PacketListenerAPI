@@ -1,4 +1,4 @@
-package me.packetlistenerapi.packethandlers;
+package me.zdziszkee.packetlistenerapi.packethandlers;
 
 
 import io.netty.channel.ChannelHandlerContext;

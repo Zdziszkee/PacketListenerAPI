@@ -1,4 +1,4 @@
-package me.packetlistenerapi.packetlisteners;
+package me.zdziszkee.packetlistenerapi.packetlisteners;
 
 
 import io.netty.channel.ChannelPipeline;

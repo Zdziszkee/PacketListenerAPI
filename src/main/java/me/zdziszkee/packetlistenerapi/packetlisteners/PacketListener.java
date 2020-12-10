@@ -1,19 +1,19 @@
-package me.packetlistenerapi.packetlisteners;
+package me.zdziszkee.packetlistenerapi.packetlisteners;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.ChannelPromise;
 import io.netty.handler.codec.MessageToMessageDecoder;
-import me.packetlistenerapi.packethandlers.InGoingPacketHandler;
-import me.packetlistenerapi.packethandlers.OutGoingPacketHandler;
-import me.packetlistenerapi.packethandlers.PacketHandler;
+import me.zdziszkee.packetlistenerapi.packethandlers.InGoingPacketHandler;
+import me.zdziszkee.packetlistenerapi.packethandlers.OutGoingPacketHandler;
+import me.zdziszkee.packetlistenerapi.packethandlers.PacketHandler;
 import net.minecraft.server.v1_8_R3.Packet;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 
-import static me.packetlistenerapi.packetlisteners.PacketListenerManager.getChannelPipeLine;
+import static me.zdziszkee.packetlistenerapi.packetlisteners.PacketListenerManager.getChannelPipeLine;
 
 
 public final class PacketListener<T extends Packet<?>> {
